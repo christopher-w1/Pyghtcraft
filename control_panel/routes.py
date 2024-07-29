@@ -9,19 +9,26 @@ server_manager = MinecraftServerManager()
 
 @control_panel.route('/')
 def index():
-    return render_template('index.html')
+    if Config.PERM_GETSTATUS < 1:
+        server_status = "running" if server_manager.process and server_manager.process.poll() is None else "offline"
+        return jsonify({"status": f"Minecraft server is {server_status}."}), 200
+    else:
+        return jsonify({"error": "GET requests not permitted."}), 401
 
-@control_panel.route('/api', methods=['POST'])
+@control_panel.route('/action', methods=['POST', 'GET'])
 def control_minecraft():
-    data = request.json
+    data     = request.json
     username = data.get('username', '')
-    api_key = data.get('api_key', '')
-    action = data.get('action', '')
-    command = data.get('command', '')
-    ip = request.remote_addr
-
-    if 'X-Forwarded-For' in request.headers:
-        ip = request.headers.getlist("X-Forwarded-For")[0].rpartition(' ')[-1]
+    api_key  = data.get('api_key', '')
+    action   = data.get('action', '')
+    command  = data.get('command', '')
+    
+    if request.method == 'GET':
+        if Config.PERM_GETSTATUS < 1:
+            server_status = "running" if server_manager.process and server_manager.process.poll() is None else "offline"
+            return jsonify({"status": f"Minecraft server is {server_status}."}), 200
+        else:
+            return jsonify({"error": "GET requests not permitted."}), 401
 
     # Open database
     with get_db() as db:
