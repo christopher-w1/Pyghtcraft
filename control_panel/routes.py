@@ -53,6 +53,12 @@ def control_minecraft():
                 if is_action_permitted(db, username, api_key, Config.PERM_STOPSERVER):
                     server_manager.stop_server()
                     return jsonify({"status": "Minecraft server stopped."}), 200
+            # Request to reboot the minecraft server
+            case "reboot":
+                if is_action_permitted(db, username, api_key, max(Config.PERM_STOPSERVER, Config.PERM_RUNSERVER)):
+                    server_manager.stop_server()
+                    server_manager.start_server()
+                    return jsonify({"status": "Minecraft server restarted."}), 200
             # Request to acquire the latest console output
             case "getconsole":
                 if is_action_permitted(db, username, api_key, Config.PERM_SEECONSOLE):
