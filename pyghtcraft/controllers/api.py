@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from db import get_db
-from db.api_key_utils import is_action_permitted
-from db.auth_utils import verify_password
+from db.api_key_utils import is_action_permitted, is_api_key_valid
+from db.auth_utils import verify_password, change_user_password
 from config import Config
 from modules.servermanager import MinecraftServerManager
 import logging
@@ -26,16 +26,28 @@ def control_user():
     api_key  = data.get('api_key', '')
     action   = data.get('action', '')
 
-    
     # Open database
     with get_db() as db:
-        match action:
 
-            #case "changepassword":
+        if is_api_key_valid(db, username, api_key):
 
+            match action:
 
-            case _:
+                case "changepassword":
+                    message = change_user_password(db, username, password, new_password)
+                    code = 200 if "success" in message else 400
+                    return jsonify({"message": message}), code
+                    
+                #case "changeemail":
+
+                #case "changename":
+
+                #case "recoverpassword":
+
+                case _:
                     return jsonify({"error": "Invalid action."}), 400
+                
+        return jsonify({"error": "Invalid API key. Please log in again."}), 401
 
 
 @api_blueprint.route('/api/server', methods=['GET', 'POST'])

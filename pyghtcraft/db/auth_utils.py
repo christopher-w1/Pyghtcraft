@@ -6,6 +6,10 @@ from sqlalchemy.orm import Session
 from sqlalchemy import exists
 from .models import Authentification, WebsitePermissions
 
+def current_millis():
+    # Return the current time in milliseconds
+    return int(datetime.datetime.now().timestamp() * 1000)
+
 def get_user_by_username(db: Session, username: str):
     return db.query(Authentification).filter(Authentification.username == username).first()
 
@@ -13,19 +17,17 @@ def generate_random_hex(length=16):
     # Generate a random hexadecimal string of a given length
     return os.urandom((length+1)//2).hex()[:length]
 
-def hash_password(password, salt):
-    # Hash the password with a given salt using SHA-256
+def hash_password(password: str, salt: str):
+    """
+    Hashes the password, salts it, then hashes it again.
+    """
     first_hash = hashlib.sha256(password.encode('utf-8')).hexdigest()
     hasher = hashlib.sha256()
     hasher.update((first_hash + salt).encode('utf-8'))
     hashcode = hasher.hexdigest()
     return f"$SHA${salt}${hashcode}"
 
-def current_millis():
-    # Return the current time in milliseconds
-    return int(datetime.datetime.now().timestamp() * 1000)
-
-def is_valid_email(email):
+def is_valid_email(email: str):
     """
     Check if an email address has a valid format.
 
@@ -36,7 +38,13 @@ def is_valid_email(email):
     return re.match(email_regex, email) is not None
 
 def check_and_insert_user(db: Session, username: str, clear_password: str, email: str, ip: str):
-    # Check if user already exists
+    """
+    Inserts a new user into the database.
+    Checks whether user is a duplicate and username, password and email are valid.
+
+    :username:          Name of the new user.
+    :clear_passowrd:    Password of the user. Will be SHA256'd by this function.
+    """
     user_exists = db.query(exists().where(Authentification.username == username)).scalar()
 
     if len(clear_password) < 7:
@@ -69,9 +77,48 @@ def check_and_insert_user(db: Session, username: str, clear_password: str, email
         return "User registered successfully!"
     else:
         return "A user with this name already exists!"
+    
+def change_user_password(db: Session, username: str, old_password: str, new_password: str):
+    """
+    Changes the password for an existing user.
+
+    :username:          Name of the user.
+    :old_password:      Current password of the user.
+    :new_password:      New password for the user.
+    """
+    user = db.query(Authentification).filter(Authentification.username == username).first()
+
+    if not username:
+        return "Error: User name must not be empty!"
+
+    if not user:
+        return "Error: Wrong username or password!"
+
+    if len(new_password) < 7:
+        return "Error: New password must be at least 7 characters!"
+
+    # Verify old password
+    salt = user.password.split('$')[2]
+    hashed_old_password = hash_password(old_password, salt)
+
+    if hashed_old_password != user.password:
+        return "Error: Wrong username or password!"
+
+    # Hash the new password
+    new_salt = generate_random_hex()
+    hashed_new_password = hash_password(new_password, new_salt)
+
+    # Update the password in the database
+    user.password = hashed_new_password
+    db.commit()
+
+    return "Password changed successfully!"
 
 def verify_password(stored_password: str, provided_password: str):
-    # Verify the provided password against the stored hashed password
+    """
+    Verify the provided password against the stored hashed password.
+    Password is stored in the format '$SHA${salt}${hash}'.
+    """
     if not stored_password.startswith("$SHA$"):
         return False
     salt = stored_password.split('$')[2]

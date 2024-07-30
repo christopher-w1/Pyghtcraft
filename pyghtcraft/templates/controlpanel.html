@@ -18,18 +18,19 @@
         <div class="widthbox" id="widthbox1">
             <div class="container" id="serverSidebar">
                 <h2>Server Control Panel</h2>
+
+                <div class="messagebox">
+                    <div id="response"></div>    
+                </div>
                 <hr>
                 <div class="button-container">
                     <button id="startBtn" onclick="sendAction('start')">Start Server</button>
                     <button id="stopBtn" onclick="sendAction('stop')">Stop Server</button>
                     <button id="infoBtn" onclick="sendAction('askaddress')">Server address?</button>
-                    <button onclick="window.location.href='/minecraft/'">Go Back</button>
                     {% if perm_level is not none and perm_level >= 8 %}
                     <button id="openConsoleBtn" onclick="toggleConsole()">Open Console</button>
                     {% endif %}
-                    <div class="messagebox">
-                        <div id="response"></div>    
-                    </div>
+                    <button onclick="window.location.href='/minecraft/'">Go Back</button>
                 </div>
             </div>
             <div class="container" id="consoleWindow">
