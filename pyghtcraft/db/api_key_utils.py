@@ -1,23 +1,33 @@
-import os
-import datetime
+import os, datetime, logging, hashlib, base64
 from sqlalchemy.orm import Session
 from config import Config
 from .models import WebsitePermissions, WebApiSession
-import logging
+
 
 logger = logging.getLogger()
-keycounter = 0
+keycounter = 1
 
-def generate_hex(length=32):
-    # Generate a random hexadecimal string of a given length
+def generate_hex(length=16):
+    """
+    Generates a random hexadecimal string.
+    """
     return os.urandom((length+1)//2).hex()[:length]
+
+def gen_base64_salt(input_str: str, number: int, length=16):
+    """
+    Generates a salt by base64-encoding a string with a number.
+    """
+    hash_object = hashlib.sha256((f'{number}{input_str}').encode())
+    hash_bytes = hash_object.digest()
+    base64_encoded = base64.urlsafe_b64encode(hash_bytes).decode()
+    return base64_encoded[:length]
 
 def gen_api_key(db: Session, username: str):
     """
     Generates and returns a new API key for the given user.
     """
     global keycounter
-    api_key = f"{keycounter:03d}_{generate_hex(28)}"
+    api_key = f"{gen_base64_salt(username, keycounter, 8)}{generate_hex(24)}"
     keycounter += 1
        
     # Get user's permission level from the database
@@ -36,6 +46,7 @@ def gen_api_key(db: Session, username: str):
     new_session = WebApiSession(username=username, api_key=api_key, valid_until=valid_until, perm_level=perm_level)
     db.add(new_session)
     db.commit()
+    delete_expired_api_keys_for_user(db, username)
     logger.info(f"Generated new API key for {username}, Permission Level {perm_level}, valid until {valid_until}.")
     return api_key, perm_level
 
