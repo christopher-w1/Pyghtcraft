@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from db import get_db
 from db.auth_utils import get_user_by_username, verify_password, check_and_insert_user
-from db.api_key_utils import gen_api_key, invalidate_api_key
+from db.api_key_utils import gen_api_key, invalidate_api_key, get_perm_level
 import logging
 
 auth_blueprint = Blueprint('auth', __name__)
@@ -22,8 +22,9 @@ def login():
             if user and verify_password(user.password, password):
                 session['username'] = username
                 # Generate API Key
-                api_key = gen_api_key(db, username)
+                api_key, perm_level = gen_api_key(db, username)
                 session['api_key'] = api_key
+                session['perm_level'] = perm_level
                 logger.info(f"User {username} logged in with API key {api_key}.")
                 return redirect(url_for('main.index'))
             else:

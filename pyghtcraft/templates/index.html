@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minecraft Account- und Serververwaltung</title>
+    <script>
+        // Define global JavaScript variables with session values
+        const username   = "{{ session['username'] }}";
+        const api_key    = "{{ session['api_key'] }}";
+        const perm_level = "{{ session['perm_level'] }}";
+    </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header></header>
-    <!--
-    <header>
-        <div class="container">
-            <h1>Minecraft account and server management</h1>
-        </div>
-    </header>
-    -->
     <main>
         <div class="container">
             {% if username %}

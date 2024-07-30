@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Account Information</title>
+    <script>
+        // Define global JavaScript variables with session values
+        const username   = "{{ session['username'] }}";
+        const api_key    = "{{ session['api_key'] }}";
+        const perm_level = "{{ session['perm_level'] }}";
+    </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>   
@@ -32,7 +38,7 @@
 
                 <div class="vbutton-container">
                     <button id="cancelPwChange">Cancel</button>
-                    <button id="confirmPwChange">Confirm</button>
+                    <button id="submitPwChange">Submit</button>
                 </div>
             </div>
         </div>

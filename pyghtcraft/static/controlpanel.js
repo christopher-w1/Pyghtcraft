@@ -13,12 +13,8 @@ function disableButtons(isdisabled) {
 function sendAction(action) {
     disableButtons(true); // Disable buttons
 
-    // Get username and API key from Flask session
-    const username = "{{ session['username'] }}";
-    const api_key = "{{ session['api_key'] }}";
-    
     document.getElementById('response').innerText = 'Waiting for server status...';
-    fetch('/minecraft/api', {
+    fetch('/minecraft/api/server', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -87,10 +83,8 @@ function toggleConsole() {
 function fetchConsoleOutput() {
     if (!consoleOpen) return; // Stop fetching if console is closed
 
-    const username = "{{ session['username'] }}";
-    const api_key = "{{ session['api_key'] }}";
 
-    fetch('/minecraft/api', {
+    fetch('/minecraft/api/server', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -138,10 +132,7 @@ function sendConsoleCommand() {
     const command = consoleInput.value.trim();
     if (command === '') return;
 
-    const username = "{{ session['username'] }}";
-    const api_key = "{{ session['api_key'] }}";
-
-    fetch('/controlpanel/api', {
+    fetch('/minecraft/api/server', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

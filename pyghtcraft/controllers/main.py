@@ -28,3 +28,8 @@ def controlpanel():
         with get_db() as db:
             perm_lvl = get_perm_level(db, session['api_key'], username)
             return render_template('controlpanel.html', perm_level=perm_lvl)
+        
+@main_blueprint.route('/permissions')
+def permissions():
+    return render_template('notimplemented.html')
+

@@ -12,9 +12,13 @@ server_manager = MinecraftServerManager()
 
 logger = logging.getLogger()
 
-
 @api_blueprint.route('/api/user', methods=['GET', 'POST'])
 def control_user():
+
+    if request.method != 'POST':
+        logger.warn("Client sent GET request on /api/user")
+        return jsonify({"error": "GET requests are not permitted on this URL."}), 400
+
     data     = request.json
     username = data.get('username', '')
     password  = data.get('password', '')
@@ -22,8 +26,6 @@ def control_user():
     api_key  = data.get('api_key', '')
     action   = data.get('action', '')
 
-    if request.method == 'GET':
-        return jsonify({"error": "GET requests are not permitted on this URL."}), 401
     
     # Open database
     with get_db() as db:
@@ -38,20 +40,22 @@ def control_user():
 
 @api_blueprint.route('/api/server', methods=['GET', 'POST'])
 def control_minecraft():
-    data     = request.json
-    username = data.get('username', '')
-    api_key  = data.get('api_key', '')
-    action   = data.get('action', '')
-    
-    if request.method == 'GET':
+
+    if request.method != 'POST':
         if Config.PERM_GETSTATUS < 1:
             server_status = "running" if server_manager.process and server_manager.process.poll() is None else "offline"
             return jsonify({"status": f"Minecraft server is {server_status}."}), 200
         else:
             return jsonify({"error": "GET requests not permitted on this URL."}), 401
-
+    
+    data     = request.json
+    username = data.get('username', '')
+    api_key  = data.get('api_key', '')
+    action   = data.get('action', '')
+    
     # Open database
     with get_db() as db:
+        logger.info(f"User '{username}' sent POST request with action '{action}' to API.")
         match action:
             # Request to ask if server is offline or online
             case "status":
@@ -99,4 +103,5 @@ def control_minecraft():
                     return jsonify({"error": "Invalid action."}), 400
                 
         # Message if API key is invalid, unauthorized or non-existent
+        logger.warn(f"User '{username}' is not authorized to perform '{action}'")
         return jsonify({"error": "Unauthorized."}), 401
