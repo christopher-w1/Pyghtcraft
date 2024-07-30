@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Server Control Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header></header>
+
+    <main>
+        <div class="widthbox" id="widthbox1">
+            <div class="container" id="serverSidebar">
+                <h2>Server Control Panel</h2>
+                <hr>
+                <div class="button-container">
+                    <button id="startBtn" onclick="sendAction('start')">Start Server</button>
+                    <button id="stopBtn" onclick="sendAction('stop')">Stop Server</button>
+                    <button id="infoBtn" onclick="sendAction('askaddress')">Server address?</button>
+                    <button onclick="window.location.href='/minecraft/'">Go Back</button>
+                    {% if perm_level is not none and perm_level >= 8 %}
+                    <button id="openConsoleBtn" onclick="toggleConsole()">Open Console</button>
+                    {% endif %}
+                    <div class="messagebox">
+                        <div id="response"></div>    
+                    </div>
+                </div>
+            </div>
+            <div class="container" id="consoleWindow">
+                <div id="consoleContainer"></div>
+                <input type="text" id="consoleInput" placeholder=">_" onkeydown="handleConsoleInput(event)">
+            </div>
+        </div>
+
+        <div>
+            <div class="toolbar" id="consoletoolbar">
+                <button class="consoleBtn" id="closeBtn2" onclick="toggleConsole()">Back</button>
+                <button class="consoleBtn" id="startBtn2" onclick="sendAction('start')">Start</button> 
+                <button class="consoleBtn" id="stopBtn2" onclick="sendAction('stop')">Stop</button>               
+            </div>
+        </div>
+    </main>
+    <script src="{{ url_for('static', filename='script.js') }}"></script> <!-- Link to external JavaScript file -->
+</body>
+</html>

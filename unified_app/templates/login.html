@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header></header>
+    <!--
+    <header>
+        <div class="container">
+            <h1>Login</h1>
+        </div>
+    </header>
+    -->
+    <main>
+        <div>
+            <form action="/minecraft/login" method="POST" class="container w3">
+
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <div class="messagebox">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                        <div>
+                            {% for category, message in messages %}
+                                <p class="{{ category }}" style="font-weight: bold">{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    {% endwith %}
+                    <p>Please enter your login credentials.</p>
+                    </div>
+                <hr style="height: 5px;">
+                <div class="button-container">
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

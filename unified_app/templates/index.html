@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Account- und Serververwaltung</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header></header>
+    <!--
+    <header>
+        <div class="container">
+            <h1>Minecraft account and server management</h1>
+        </div>
+    </header>
+    -->
+    <main>
+        <div class="container">
+            {% if username %}
+                <h2>Welcome back, {{ username }}!</h2>
+            {% else %}
+                <h2>Welcome!</h2>
+                <p>You are not logged in.</p>
+            {% endif %}
+            <hr>
+            <div class="button-container w3">
+                {% if username %}
+                    <button onclick="window.location.href='/minecraft/account'">Manage Account</button>
+                    {% if perm_level is not none and perm_level >= 8 %}
+                        <button onclick="window.location.href='/minecraft/permissions'">Manage Permissions</button>
+                    {% endif %}
+                    {% if perm_level is not none and perm_level >= 3 %}
+                        <button onclick="window.location.href='/minecraft/controlpanel'">Server Control Panel</button>
+                    {% endif %}
+                    <button onclick="window.location.href='/minecraft/logout'">Logout</button>
+                {% else %}
+                    <button onclick="window.location.href='/minecraft/login'">Login</button>
+                    <button onclick="window.location.href='/minecraft/register'">Register</button>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+</body>
+</html>
