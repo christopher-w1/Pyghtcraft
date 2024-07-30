@@ -1,6 +1,7 @@
 from flask import Flask
 from controllers.auth import auth_blueprint
 from controllers.main import main_blueprint
+from controllers.api  import api_blueprint
 from datetime import timedelta
 from config import Config
 import logging
@@ -21,6 +22,7 @@ logger = logging.getLogger()
 # Registriere die Blueprints
 app.register_blueprint(auth_blueprint, url_prefix=Config.URL_PREFIX)
 app.register_blueprint(main_blueprint, url_prefix=Config.URL_PREFIX)
+app.register_blueprint(api_blueprint,  url_prefix=Config.URL_PREFIX)
 
 if __name__ == '__main__':
     from waitress import serve
