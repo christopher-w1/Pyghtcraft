@@ -17,8 +17,11 @@ class Config:
     LOGFILE             = 'logs/mcservice.log'
     
     # Port for access to webapp and api
-    WEB_API_PORT        = 80
+    PYGHTCRAFT_PORT     = 8080
     URL_PREFIX          = '/minecraft'
+
+    # Duration the login and access key are valid (in minutes)
+    KEY_VALID_DURATION  = 30
     
     # Permissions
     PERM_GETSTATUS      = 0
@@ -30,8 +33,8 @@ class Config:
     ##########################
     # Database configuration #
     ##########################
-    DB_USER         = "username"
-    DB_PASSPHRASE   = "password"
+    DATABASENAME    = "mydatabase"
+    DB_USER         = "myuser"
+    DB_PASSPHRASE   = "mypassword"
     DB_ADDRESS      = "localhost"
-    DATABASENAME    = "pyghtcraft"
     DATABASE_URL    = f"mysql://{DB_USER}:{DB_PASSPHRASE}@{DB_ADDRESS}/{DATABASENAME}"

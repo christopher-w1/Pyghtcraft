@@ -17,7 +17,7 @@ class Config:
     LOGFILE             = 'logs/mcservice.log'
     
     # Port for access to webapp and api
-    WEB_API_PORT        = 8080
+    PYGHTCRAFT_PORT     = 8080
     URL_PREFIX          = '/minecraft'
 
     # Duration the login and access key are valid (in minutes)

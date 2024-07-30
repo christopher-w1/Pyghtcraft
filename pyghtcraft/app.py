@@ -26,4 +26,4 @@ app.register_blueprint(api_blueprint,  url_prefix=Config.URL_PREFIX)
 
 if __name__ == '__main__':
     from waitress import serve
-    serve(app, host="0.0.0.0", port=Config.WEB_API_PORT)
+    serve(app, host="0.0.0.0", port=Config.PYGHTCRAFT_PORT)
