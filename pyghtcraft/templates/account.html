@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Account Information</title>
+    <script>
+        // Define global JavaScript variables with session values
+        const username   = "{{ session['username'] }}";
+        const api_key    = "{{ session['api_key'] }}";
+        const perm_level = "{{ session['perm_level'] }}";
+    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>   
+    <header></header>
+    <main>
+        <div class="widthbox"id="widthbox2" >
+            <div class="container" id="accountsidebade" style="margin-inline: 5px;">
+                <div class="button-container">
+                    <button id="changePwBtn">Change Password</button>
+                    <button id="changeMailBtn">Change E-Mail</button>
+                    <button id="changeNameBtn">Change Name</button>
+                </div>
+            </div>
+            <div class="container" id="changepasswordform">
+                <label for="username">User Name</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username." required>
+                
+                <label for="old_password">Old Password</label>
+                <input type="password" id="old_password" name="old_password" placeholder="Enter your current password." required>
+                
+                <label for="new_password">New Password</label>
+                <input type="password" id="new_password" name="new_password" placeholder="Enter your new password.">
+                
+                <label for="new_password">New Password (Confirm)</label>
+                <input type="password" id="new_password2" name="new_password2" placeholder="Enter your new password again.">
+
+                <div class="vbutton-container">
+                    <button id="cancelPwChange">Cancel</button>
+                    <button id="submitPwChange">Submit</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
