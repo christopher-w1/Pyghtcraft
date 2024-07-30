@@ -20,12 +20,13 @@ def login():
         with get_db() as db:
             user = get_user_by_username(db, username)
             if user and verify_password(user.password, password):
-                session['username'] = username
                 # Generate API Key
                 api_key, perm_level = gen_api_key(db, username)
+                # Save session data
+                session['username'] = username
                 session['api_key'] = api_key
                 session['perm_level'] = perm_level
-                logger.info(f"User {username} logged in with API key {api_key}.")
+                logger.info(f"User '{username}' logged in with API key '{api_key[:8]}'.")
                 return redirect(url_for('main.index'))
             else:
                 flash("Login failed.", "errormessage")
@@ -49,6 +50,7 @@ def logout():
 
         session.pop('username', None)
         session.pop('api_key', None)
+        session.pop('perm_level', None)
         logger.info(f"User {username} logged out.")
         return redirect(url_for('main.index'))
 
