@@ -17,8 +17,8 @@ class Config:
     LOGFILE             = 'logs/mcservice.log'
     
     # Port for access to webapp and api
-    WEB_API_PORT        = 8080
-    URL_PREFIX          = '/controlpanel'
+    WEB_API_PORT        = 80
+    URL_PREFIX          = '/minecraft'
     
     # Permissions
     PERM_GETSTATUS      = 0

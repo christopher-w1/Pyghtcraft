@@ -5,7 +5,7 @@ from datetime import timedelta
 from config import Config
 import logging
 
-app = Flask(__name__, static_url_path='/minecraft/static', static_folder='static')
+app = Flask(__name__, static_url_path=f'/{Config.URL_PREFIX}/static', static_folder='static')
 
 app.secret_key = '095v457z'  # Für Session Management
 app.permanent_session_lifetime = timedelta(minutes=10)
@@ -19,8 +19,8 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 # Registriere die Blueprints
-app.register_blueprint(auth_blueprint, url_prefix='/minecraft')
-app.register_blueprint(main_blueprint, url_prefix='/minecraft')
+app.register_blueprint(auth_blueprint, url_prefix=Config.URL_PREFIX)
+app.register_blueprint(main_blueprint, url_prefix=Config.URL_PREFIX)
 
 if __name__ == '__main__':
     from waitress import serve

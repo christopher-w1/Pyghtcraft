@@ -5,63 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Account Information</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const newPassword = document.getElementById('new_password');
-            const confirmPassword = document.getElementById('new_password2');
-
-            confirmPassword.style.display = 'none';  // Initially hide the confirm password field
-
-            newPassword.addEventListener('input', function() {
-                if (newPassword.value) {
-                    confirmPassword.style.display = 'block';  // Show if new password is not empty
-                } else {
-                    confirmPassword.style.display = 'none';  // Hide if new password is empty
-                }
-            });
-        });
-    </script>
 </head>
 <body>   
     <header></header>
     <main>
-        <div> 
-            <form action="/minecraft/account" method="post" class="container w3">
-                
-                <label for="old_username">Username</label>
-                <input type="text" id="old_username" name="old_username" placeholder="Enter your username." required>
+        <div class="widthbox"id="widthbox2" >
+            <div class="container" id="accountsidebade" style="margin-inline: 5px;">
+                <div class="button-container">
+                    <button id="changePwBtn">Change Password</button>
+                    <button id="changeMailBtn">Change E-Mail</button>
+                    <button id="changeNameBtn">Change Name</button>
+                </div>
+            </div>
+            <div class="container" id="changepasswordform">
+                <label for="username">User Name</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username." required>
                 
                 <label for="old_password">Old Password</label>
                 <input type="password" id="old_password" name="old_password" placeholder="Enter your current password." required>
                 
                 <label for="new_password">New Password</label>
-                <input type="password" id="new_password" name="new_password" placeholder="Enter your new password (optional).">
-
-                <input type="password" id="new_password2" name="new_password2" placeholder="Confirm new password.">
+                <input type="password" id="new_password" name="new_password" placeholder="Enter your new password.">
                 
-                <label for="email">New E-Mail</label>
-                <input type="email" id="new_email" name="new_email" placeholder="Enter your new e-mail (optional).">
-                
+                <label for="new_password">New Password (Confirm)</label>
+                <input type="password" id="new_password2" name="new_password2" placeholder="Enter your new password again.">
 
-                <div class="messagebox">
-                    <hr style="height: 10px; margin: 0px">
-                    {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        {% for message in messages %}
-                        <div>{{ message }}</div>
-                        {% endfor %}
-                    {% else %}
-                        <div>Enter the credentials you want to change</div>
-                    {% endif %}
-                    {% endwith %}
-                </div>
-
-                <hr style="height: 15px;">
                 <div class="vbutton-container">
-                    <input type="submit" value="Update Account">
-                    <button onclick="window.location.href='/minecraft/'">Go Back</button>
+                    <button id="cancelPwChange">Cancel</button>
+                    <button id="confirmPwChange">Confirm</button>
                 </div>
-            </form>        
+            </div>
         </div>
     </main>
 </body>

@@ -41,7 +41,7 @@ main {
 
 .widthbox {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: nowrap;
     overflow-y: hidden;
     justify-content: center;
@@ -221,7 +221,8 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px var(--bright) inset !important;
+    -webkit-box-shadow: 0 0 0 30px #eee inset !important;
+    color: #555;
     outline: none;
 }
 

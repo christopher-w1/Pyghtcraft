@@ -52,9 +52,9 @@ def delete_expired_api_keys_for_user(db: Session, username: str):
     now = datetime.datetime.now()
     
     expired_sessions = db.query(WebApiSession).filter(WebApiSession.username == username, WebApiSession.valid_until < now).all()
-    
-    for session in expired_sessions:
-        db.delete(session)
+    if expired_sessions:
+        for session in expired_sessions:
+            db.delete(session)
     db.commit()
 
 def is_api_key_valid(db: Session, api_key: str):
@@ -62,6 +62,7 @@ def is_api_key_valid(db: Session, api_key: str):
     Checks if an API key is still valid.
     """
     session = db.query(WebApiSession).filter(WebApiSession.api_key == api_key).first()
+    if session is None: return False
     return session and session.valid_until > datetime.datetime.now()
     
 def is_perm_level_sufficient(db: Session, api_key: str, required_level: int):
@@ -69,6 +70,7 @@ def is_perm_level_sufficient(db: Session, api_key: str, required_level: int):
     Checks if the API key owner's permission level is at least the required level.
     """
     session = db.query(WebApiSession).filter(WebApiSession.api_key == api_key).first()
+    if session is None: return False
     return session and session.perm_level >= required_level
     
 def is_action_permitted(db: Session, username: str, api_key: str, required_level: int):
@@ -78,13 +80,17 @@ def is_action_permitted(db: Session, username: str, api_key: str, required_level
     owner, which is safer.
     """
     session = db.query(WebApiSession).filter(WebApiSession.api_key == api_key).first()
+    if session is None: return False
     return (session and session.perm_level >= required_level and 
             session.valid_until > datetime.datetime.now() and session.username == username) 
    
 def get_perm_level(db: Session, username: str, api_key: str):
     """
-    Returns the permission level associated with the users api key.
-    Returns 0 if the key is stolen from another user.
+    Returns the permission level associated with the user's API key.
+    Returns 0 if the key is stolen from another user or if the API key is not found.
     """
     session = db.query(WebApiSession).filter(WebApiSession.api_key == api_key).first()
-    return session.perm_level if session.username == username else 0
+    if session is None or  session.username != username:
+        return 0
+    return session.perm_level
+

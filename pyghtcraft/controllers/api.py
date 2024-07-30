@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from db import get_db
 from db.api_key_utils import is_action_permitted
+from db.auth_utils import verify_password
 from config import Config
 from modules.servermanager import MinecraftServerManager
 import logging
@@ -11,20 +12,43 @@ server_manager = MinecraftServerManager()
 
 logger = logging.getLogger()
 
-@api_blueprint.route('/api', methods=['GET', 'POST'])
+
+@api_blueprint.route('/api/user', methods=['GET', 'POST'])
+def control_user():
+    data     = request.json
+    username = data.get('username', '')
+    password  = data.get('password', '')
+    new_password  = data.get('new_password', '')
+    api_key  = data.get('api_key', '')
+    action   = data.get('action', '')
+
+    if request.method == 'GET':
+        return jsonify({"error": "GET requests are not permitted on this URL."}), 401
+    
+    # Open database
+    with get_db() as db:
+        match action:
+
+            #case "changepassword":
+
+
+            case _:
+                    return jsonify({"error": "Invalid action."}), 400
+
+
+@api_blueprint.route('/api/server', methods=['GET', 'POST'])
 def control_minecraft():
     data     = request.json
     username = data.get('username', '')
     api_key  = data.get('api_key', '')
     action   = data.get('action', '')
-    command  = data.get('command', '')
     
     if request.method == 'GET':
         if Config.PERM_GETSTATUS < 1:
             server_status = "running" if server_manager.process and server_manager.process.poll() is None else "offline"
             return jsonify({"status": f"Minecraft server is {server_status}."}), 200
         else:
-            return jsonify({"error": "GET requests not permitted."}), 401
+            return jsonify({"error": "GET requests not permitted on this URL."}), 401
 
     # Open database
     with get_db() as db:
@@ -67,6 +91,7 @@ def control_minecraft():
             # Request to run a console command
             case "command":
                 if is_action_permitted(db, username, api_key, Config.PERM_RUNCOMMAND):
+                    command  = data.get('command', '')
                     server_manager.send_command(command)
                     return jsonify({"status": f"Command '{command}' sent to Minecraft server."}), 200
             # Any other requests are invalid
