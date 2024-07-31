@@ -2,7 +2,6 @@ from flask import Flask
 from controllers.auth import auth_blueprint
 from controllers.main import main_blueprint
 from controllers.api  import api_blueprint
-from db.auth_utils import generate_hex
 from datetime import timedelta
 from config import Config
 import logging, argparse, os
@@ -12,7 +11,7 @@ app = Flask(__name__, static_url_path=f'/{Config.URL_PREFIX}/static', static_fol
 # Set secret key for session management
 if not os.path.exists(Config.SECRET_KEY_FILE):
     # Generate new key if necessary
-    new_key = generate_hex(32)
+    new_key = os.urandom(32).hex()
     with open(Config.SECRET_KEY_FILE, 'w') as f:
         f.write(new_key)
     app.secret_key = new_key
