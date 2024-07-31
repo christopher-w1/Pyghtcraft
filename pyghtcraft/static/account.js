@@ -6,8 +6,22 @@ const enum_email = 2;
 const enum_name = 3;
 
 const message_element = document.getElementById('js_hint_messages');
+const message_element_sidebar = document.getElementById('sidebarmessage');
 
-const api_url = "";
+const api_url = "/minecraft/api/user";
+
+function displayError(errormsg) {
+    message_element.className = 'error';
+    message_element.innerText = errormsg;
+    message_element.style.display = 'block';
+}
+function displaySuccess(successmsg) {
+    message_element.className = '';
+    message_element.innerText = '';
+    message_element.style.display = 'none';
+    message_element_sidebar.innerText = successmsg;
+    message_element_sidebar.style.display = 'block';
+}
 
 function openEditorPassword() {
     const sidebar = document.getElementById('accountsidebar');
@@ -87,7 +101,6 @@ function closeEditor() {
 }
 
 async function changePassword(current_username, current_password, new_password) {
-    const url = '/api/user';
 
     const data = {
         username: current_username,
@@ -98,7 +111,7 @@ async function changePassword(current_username, current_password, new_password) 
     };
 
     try {
-        const response = await fetch(url, {
+        const response = await fetch(api_url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -109,15 +122,13 @@ async function changePassword(current_username, current_password, new_password) 
         const result = await response.json();
 
         if (response.ok) {
-            message_element.textContent = result.message || 'Password changed successfully!';
-            message_element.className = 'success'; // Setzt die CSS-Klasse für Erfolg
+            displaySuccess(result.message || 'Password changed successfully!');
+            closeEditor();
         } else {
-            message_element.textContent = result.error || 'Error changing password';
-            message_element.className = 'error'; // Setzt die CSS-Klasse für Fehler
+            displayError(result.message || result.error || 'Error changing password');
         }
     } catch (error) {
-        message_element.textContent = 'Network error occurred.';
-        message_element.className = 'error'; // Setzt die CSS-Klasse für Fehler
+        displayError('Network error occurred.');
     }
     message_element.style = "display: box;"
 }
@@ -136,19 +147,30 @@ function submitEditorData() {
     const current_password = document.getElementById('current_password').value.trim();
 
     message_element.innerText = "";
+    
+    // Check name and password
+    if (!(username === current_username)) {
+        displayError("Wrong username!");
+    } else if (new_password.length < 7) {
+        displayError("New password is too short!");
+    } else if (!(new_password === new_password2)) {
+        displayError("Password didn't match confirmation. Please type again.");
+    } else {
 
-    switch (editorMode) {
-        case enum_password:
-            if (!(new_password === new_password2)) {
-                message_element.innerText = "Password didn't match confirmation. Please type again.";
-            } else if (new_password.length === 0) {
-                message_element.innerText = "Please enter a new Password.";
-            } else {
+        switch (editorMode) {
+            case enum_password:
                 changePassword(current_username, current_password, new_password);
-            }
+                
+            //case enum_email
 
-        default:
-            console.log('Unkown editor mode: ' + editorMode);
-            break;
+
+            //case enum_name
+
+    
+            default:
+                console.log('Unkown editor mode: ' + editorMode);
+                break;
+            }
+        }
     }
-}
+    

@@ -20,7 +20,7 @@ body {
     color: var(--white); /* Helle Schriftfarbe für besseren Kontrast */
     margin: 0;
     padding: 0;
-    background-image: url(mc2.jpg); /*url("mc1.jpg");*/
+    background-image: url(mc0.png); /*url("mc1.jpg");*/
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -36,6 +36,15 @@ main {
     height: 100%; /* Höhe abzüglich Header- und Footer-Höhe */
     width: 100%;
     padding: 0px;
+}
+
+a {
+    color: #fff;
+}
+
+h2 {
+    margin-top: 15px;
+    font-size: 28px;
 }
 
 
@@ -314,5 +323,5 @@ h1 {
 }
 
 .error {
-    color: #f77;
+    color: #f55;
 }

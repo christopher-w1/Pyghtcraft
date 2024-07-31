@@ -98,10 +98,7 @@ def change_user_password(db: Session, username: str, old_password: str, new_pass
         return "Error: New password must be at least 7 characters!"
 
     # Verify old password
-    salt = user.password.split('$')[2]
-    hashed_old_password = hash_password(old_password, salt)
-
-    if hashed_old_password != user.password:
+    if not verify_password(user.password, old_password):
         return "Error: Wrong username or password!"
 
     # Hash the new password
@@ -110,6 +107,35 @@ def change_user_password(db: Session, username: str, old_password: str, new_pass
 
     # Update the password in the database
     user.password = hashed_new_password
+    db.commit()
+
+    return "Password changed successfully!"   
+ 
+def change_user_email(db: Session, username: str, old_password: str, new_email: str):
+    """
+    Changes the password for an existing user.
+
+    :username:          Name of the user.
+    :old_password:      Current password of the user.
+    :new_password:      New password for the user.
+    """
+    user = db.query(Authentification).filter(Authentification.username == username).first()
+
+    if not username:
+        return "Error: User name must not be empty!"
+
+    if not user:
+        return "Error: Wrong username or password!"
+
+    if not is_valid_email(new_email):
+        return "Error: '{new_email}' is not a valid mail address!"
+
+    # Verify old password
+    if not verify_password(user.password, old_password):
+        return "Error: Wrong username or password!"
+
+    # Update the email in the database
+    user.email = new_email
     db.commit()
 
     return "Password changed successfully!"

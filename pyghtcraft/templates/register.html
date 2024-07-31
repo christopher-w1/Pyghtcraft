@@ -12,7 +12,7 @@
         <div> 
         <br>
         <form action="/minecraft/register" method="post" class="container w3">
-            
+            <h2>New Account</h2>
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="This must match your name in minecraft." required>
             <label for="password">Password</label>
@@ -32,6 +32,8 @@
                     {% endif %}
                 {% endwith %}
             </div>
+            <div>Already have an Account?</div> 
+            <a href="/minecraft/login">Sign in here</a>
             <hr style="height: 5px;">
             <div class="button-container ">
             <input type="submit" value="Register">

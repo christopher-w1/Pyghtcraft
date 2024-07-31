@@ -18,7 +18,7 @@
         <div class="widthbox" id="widthbox2" style="align-items: center; height:fit-content">
             <div class="container" id="accountsidebar" style="margin-inline: 5px;">
                 <h2> Hello, {{ session['username'] }}! </h2>
-                What do you want to do?
+                <div id="sidebarmessage">What do you want to do?</div>
                 <hr>
                 
                 <div class="button-container">
@@ -32,52 +32,53 @@
 
             <div class="container" id="accounteditor" style="margin-inline: 5px; margin-block: none; display: none;">
 
-                    <div id="changepasswordform">
-                        <h3>Enter you new password</h3>
-    
-                        <hr style="height: 5px">
-                        <label for="new_password">New Password</label>
-                        <input type="password" id="new_password" name="new_password" placeholder="Minimum length 7 characters">
-                        
-                        <label for="new_password2">New Password (Confirm)</label>
-                        <input type="password" id="new_password2" name="new_password2" placeholder="Enter your new password again.">
-                    </div>
-    
-                    <div id="changemailform">
-                        <h3>Enter you new e-mail</h3>
-                        
-                        <hr style="height: 5px">
-                        <label for="new_email">New E-Mail</label>
-                        <input type="email" id="new_email" name="new_email" placeholder="Enter your new e-mail address.">
-                        
-                        <label for="new_email2">New E-Mail (Confirm)</label>
-                        <input type="email" id="new_email2" name="new_email2" placeholder="Confirm your new e-mail address.">
-                    </div>
-
-                    <div id="changenameform">
-                        <h3>Enter you new name</h3>
-                        
-                        <hr style="height: 5px">
-                        <label for="new_name">New Username</label>
-                        <input type="text" id="new_name" name="new_name" placeholder="Enter your new name.">
-                        
-                        <label for="new_name2">New Username (Confirm)</label>
-                        <input type="text" id="new_name2" name="new_name2" placeholder="Enter your new name again.">
-                    </div>
-
-                    <h3 id="js_hint_messages" style="color: #e77;"> </h3>
-
-                    <label for="current_username">Username</label>
-                    <input type="text" id="current_username" name="current_username" placeholder="Enter your current username." required>
-                    
-                    <label for="current_password">Password</label>
-                    <input type="password" id="current_password" name="current_password" placeholder="Enter your current password." required>
                 
-                    <hr style="height: 5px">
-                    <div class="vbutton-container">
-                        <button id="cancelPwChange" onclick="closeEditor()">Cancel</button>
-                        <button id="submitPwChange" onclick="submitEditorData()">Submit</button>
-                    </div>
+                <div id="changepasswordform">
+                    <h2>Change Password</h2>
+
+                    <hr style="height: 10px">
+                    <label for="new_password">New Password</label>
+                    <input type="password" id="new_password" name="new_password" placeholder="Minimum length 7 characters">
+                    
+                    <label for="new_password2">New Password (Confirm)</label>
+                    <input type="password" id="new_password2" name="new_password2" placeholder="Enter your new password again.">
+                </div>
+
+                <div id="changemailform">
+                    <h2>Change E-Mail</h2>
+                    
+                    <hr style="height: 10px">
+                    <label for="new_email">New E-Mail</label>
+                    <input type="email" id="new_email" name="new_email" placeholder="Enter your new e-mail address.">
+                    
+                    <label for="new_email2">New E-Mail (Confirm)</label>
+                    <input type="email" id="new_email2" name="new_email2" placeholder="Confirm your new e-mail address.">
+                </div>
+
+                <div id="changenameform">
+                    <h2>Change Username</h2>
+                    
+                    <hr style="height: 10px">
+                    <label for="new_name">New Username</label>
+                    <input type="text" id="new_name" name="new_name" placeholder="Enter your new name.">
+                    
+                    <label for="new_name2">New Username (Confirm)</label>
+                    <input type="text" id="new_name2" name="new_name2" placeholder="Enter your new name again.">
+                </div>
+
+                <label for="current_username">Username</label>
+                <input type="text" id="current_username" name="current_username" placeholder="Enter your current username." required>
+                
+                <label for="current_password">Password</label>
+                <input type="password" id="current_password" name="current_password" placeholder="Enter your current password." required>
+            
+                <h3 id="js_hint_messages" style="color: #f55; display: none;"> </h3>
+
+                <hr style="height: 5px">
+                <div class="vbutton-container">
+                    <button id="cancelPwChange" onclick="closeEditor()">Cancel</button>
+                    <button id="submitPwChange" onclick="submitEditorData()">Submit</button>
+                </div>    
                 
             </div>
         </div>

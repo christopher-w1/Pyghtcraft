@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
 from db import get_db
 from db.api_key_utils import is_action_permitted, is_api_key_valid
 from db.auth_utils import verify_password, change_user_password

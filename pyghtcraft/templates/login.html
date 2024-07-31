@@ -11,7 +11,9 @@
     <main>
         <div>
             <form action="/minecraft/login" method="POST" class="container w3">
-
+                <h2>Login</h2>
+                <div>Please enter your login credentials.</div>
+                <hr style="height: 5px;">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required>
                 <label for="password">Password</label>
@@ -26,8 +28,9 @@
                         </div>
                         {% endif %}
                     {% endwith %}
-                    <p>Please enter your login credentials.</p>
                     </div>
+                    <div>Don't have an account yet?</div> 
+                    <a href="/minecraft/register">Register here</a>
                 <hr style="height: 5px;">
                 <div class="button-container">
                     <input type="submit" value="Login">
