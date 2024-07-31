@@ -22,6 +22,8 @@ class Config:
 
     # Duration the login and access key are valid (in minutes)
     KEY_VALID_DURATION  = 30
+
+    SECRET_KEY_FILE     = "session.key"
     
     # Permissions
     PERM_GETSTATUS      = 0
