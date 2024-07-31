@@ -10,6 +10,7 @@
         const api_key    = "{{ session['api_key'] }}";
         const perm_level = "{{ session['perm_level'] }}";
     </script>
+    <script src="{{ url_for('static', filename='pingServer.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>

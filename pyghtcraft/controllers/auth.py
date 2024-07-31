@@ -48,9 +48,10 @@ def logout():
                 invalidate_api_key(db, api_key)
                 logger.info(f"API key for user {username} invalidated.")
 
-        session.pop('username', None)
-        session.pop('api_key', None)
-        session.pop('perm_level', None)
+        #session.pop('username', None)
+        #session.pop('api_key', None)
+        #session.pop('perm_level', None)
+        session.clear()
         logger.info(f"User {username} logged out.")
         return redirect(url_for('main.index'))
 
@@ -76,25 +77,9 @@ def register():
     else:
         return render_template('register.html')
 
-@auth_blueprint.route('/account', methods=['GET', 'POST'])
+@auth_blueprint.route('/account', methods=['GET'])
 def update_account():
     if not 'username' in session:
         return redirect(url_for('main.index'))
-    
-    if request.method == 'POST':
-        old_username = request.form.get('old_username')
-        new_username = request.form.get('new_username')
-        old_password = request.form.get('old_password')
-        new_password = request.form.get('new_password')
-        email = request.form.get('email')
-        
-        #with get_db() as db:
-            #result = update_account_in_db(db, old_username, old_password, new_username, new_password, email)
-        result = "Not implemented!"
 
-        if result == "Update successful!":
-            flash("Account updated successfully!")
-        else:
-            flash(result)
-        return redirect(url_for('auth.update_account'))
     return render_template('account.html')

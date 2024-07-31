@@ -111,13 +111,13 @@ def change_user_password(db: Session, username: str, old_password: str, new_pass
 
     return "Password changed successfully!"   
  
-def change_user_email(db: Session, username: str, old_password: str, new_email: str):
+def change_user_email(db: Session, username: str, password: str, new_email: str):
     """
     Changes the password for an existing user.
 
     :username:          Name of the user.
-    :old_password:      Current password of the user.
-    :new_password:      New password for the user.
+    :password:          Current password of the user.
+    :new_email:         New E-Mail for the user.
     """
     user = db.query(Authentification).filter(Authentification.username == username).first()
 
@@ -131,14 +131,44 @@ def change_user_email(db: Session, username: str, old_password: str, new_email: 
         return "Error: '{new_email}' is not a valid mail address!"
 
     # Verify old password
-    if not verify_password(user.password, old_password):
+    if not verify_password(user.password, password):
         return "Error: Wrong username or password!"
 
     # Update the email in the database
     user.email = new_email
     db.commit()
 
-    return "Password changed successfully!"
+    return "E-Mail changed successfully!"
+
+def change_user_username(db: Session, username: str, password: str, new_name: str):
+    """
+    Changes the password for an existing user.
+
+    :username:          Name of the user.
+    :password:          Current password of the user.
+    :new_name:          New name for the user.
+    """
+    user = db.query(Authentification).filter(Authentification.username == username).first()
+
+    if not username or not new_name:
+        return "Error: User name must not be empty!"
+
+    if not user:
+        return "Error: Wrong username or password!"
+
+    if not new_name.isalnum():
+        return "Error: No special characters allowed in name."
+
+    # Verify password
+    if not verify_password(user.password, password):
+        return "Error: Wrong username or password!"
+
+    # Update the email in the database
+    user.username = new_name.lower()
+    user.realname = new_name
+    db.commit()
+
+    return "Username changed successfully!"
 
 def verify_password(stored_password: str, provided_password: str):
     """

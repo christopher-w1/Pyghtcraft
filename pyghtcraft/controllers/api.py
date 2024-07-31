@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, session
 from db import get_db
 from db.api_key_utils import is_action_permitted, is_api_key_valid
-from db.auth_utils import verify_password, change_user_password
+from db.auth_utils import change_user_password, change_user_email, change_user_username
 from config import Config
 from modules.servermanager import MinecraftServerManager
 import logging
@@ -22,7 +22,6 @@ def control_user():
     data     = request.json
     username = data.get('username', '')
     password  = data.get('password', '')
-    new_password  = data.get('new_password', '')
     api_key  = data.get('api_key', '')
     action   = data.get('action', '')
 
@@ -34,15 +33,22 @@ def control_user():
             match action:
 
                 case "changepassword":
+                    new_password  = data.get('new_password', '')
                     message = change_user_password(db, username, password, new_password)
                     code = 200 if "success" in message else 400
                     return jsonify({"message": message}), code
                     
-                #case "changeemail":
+                case "changeemail":
+                    new_email = data.get('new_email', '')
+                    message = change_user_email(db, username, password, new_email)
+                    code = 200 if "success" in message else 400
+                    return jsonify({"message": message}), code
 
-                #case "changename":
-
-                #case "recoverpassword":
+                case "changeusername":
+                    new_name = data.get('new_username', '')
+                    message = change_user_username(db, username, password, new_name)
+                    code = 200 if "success" in message else 400
+                    return jsonify({"message": message}), code
 
                 case _:
                     return jsonify({"error": "Invalid action."}), 400
@@ -117,3 +123,28 @@ def control_minecraft():
         # Message if API key is invalid, unauthorized or non-existent
         logger.warn(f"User '{username}' is not authorized to perform '{action}'")
         return jsonify({"error": "Unauthorized."}), 401
+
+@api_blueprint.route('/api/ping', methods=['GET', 'POST'])
+def ping():
+
+    # Just answer the PING if its a get
+    if request.method != 'POST':
+        return jsonify({"status": f"OK"}), 200
+    
+    data     = request.json
+    username = data.get('username', '')
+    api_key  = data.get('api_key', '')
+    
+    # Open database to check API key validity
+    with get_db() as db:
+
+        if is_api_key_valid(db, username, api_key):
+
+            return jsonify({"status": f"OK"}), 200
+        else:
+            if session:
+                session.clear()
+            return jsonify({"error": f"Session Timeout"}), 401
+        
+
+    return jsonify({"error": f"Server error"}), 500

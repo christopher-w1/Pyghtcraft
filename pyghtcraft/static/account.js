@@ -100,6 +100,7 @@ function closeEditor() {
     editorMode = enum_closed;
 }
 
+
 async function changePassword(current_username, current_password, new_password) {
 
     const data = {
@@ -133,6 +134,75 @@ async function changePassword(current_username, current_password, new_password) 
     message_element.style = "display: box;"
 }
 
+
+async function changeEmail(current_username, current_password, new_email) {
+
+    const data = {
+        username: current_username,
+        password: current_password,
+        new_email: new_email,
+        api_key: api_key,
+        action: 'changeemail'
+    };
+
+    try {
+        const response = await fetch(api_url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            displaySuccess(result.message || 'E-Mail changed successfully!');
+            closeEditor();
+        } else {
+            displayError(result.message || result.error || 'Error changing e-mail address');
+        }
+    } catch (error) {
+        displayError('Network error occurred.');
+    }
+    message_element.style = "display: box;"
+}
+
+
+async function changeUsername(current_username, current_password, new_username) {
+
+    const data = {
+        username: current_username,
+        password: current_password,
+        new_username: new_username,
+        api_key: api_key,
+        action: 'changeusername'
+    };
+
+    try {
+        const response = await fetch(api_url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            displaySuccess(result.message || 'Username changed successfully!');
+            closeEditor();
+        } else {
+            displayError(result.message || result.error || 'Error changing username');
+        }
+    } catch (error) {
+        displayError('Network error occurred.');
+    }
+    message_element.style = "display: box;"
+}
+
+
 function submitEditorData() {
     const new_password = document.getElementById('new_password').value.trim();
     const new_password2 = document.getElementById('new_password2').value.trim();
@@ -151,26 +221,36 @@ function submitEditorData() {
     // Check name and password
     if (!(username === current_username)) {
         displayError("Wrong username!");
-    } else if (new_password.length < 7) {
-        displayError("New password is too short!");
-    } else if (!(new_password === new_password2)) {
-        displayError("Password didn't match confirmation. Please type again.");
     } else {
 
         switch (editorMode) {
             case enum_password:
-                changePassword(current_username, current_password, new_password);
+                if (!(new_password === new_password2)) {
+                    displayError("New password did not match confirmation. Please type again.");
+                } else {
+                    changePassword(current_username, current_password, new_password);
+                }
+                break;
                 
-            //case enum_email
+            case enum_email:
+                if (!(new_email === new_email2)) {
+                    displayError("New e-mail did not match confirmation. Please type again.");
+                } else {
+                    changeEmail(current_username, current_password, new_email);
+                }
+                break;
 
+            case enum_name:
+                if (!(new_name === new_name2)) {
+                    displayError("New username did not match confirmation. Please type again.");
+                } else {
+                    changeUsername(current_username, current_password, new_email);
+                }
+                break;
 
-            //case enum_name
-
-    
             default:
                 console.log('Unkown editor mode: ' + editorMode);
                 break;
             }
         }
     }
-    

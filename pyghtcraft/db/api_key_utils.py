@@ -72,13 +72,7 @@ def delete_expired_api_keys_for_user(db: Session, username: str):
             db.delete(session)
     db.commit()
 
-def is_api_key_valid_old(db: Session, api_key: str):
-    """
-    Checks if an API key is still valid.
-    """
-    session = db.query(WebApiSession).filter(WebApiSession.api_key == api_key).first()
-    if session is None: return False
-    return session and session.valid_until > datetime.datetime.now()
+
     
 def is_api_key_valid(db: Session, username: str, api_key: str):
     """
@@ -86,18 +80,21 @@ def is_api_key_valid(db: Session, username: str, api_key: str):
     """
     session = db.query(WebApiSession).filter(WebApiSession.username == username, WebApiSession.api_key == api_key).first()
     if session is None: return False
-    return session and session.valid_until > datetime.datetime.now()
 
-def is_action_permitted_old(db: Session, username: str, api_key: str, required_level: int):
-    """
-    Checks if the API key owner is permitted to perform an action.
-    Unlike is_perm_level_sufficient, it also checks if the key is used by the rightful
-    owner, which is safer.
-    """
-    session = db.query(WebApiSession).filter(WebApiSession.api_key == api_key).first()
-    if session is None: return False
-    return (session and session.perm_level >= required_level and 
-            session.valid_until > datetime.datetime.now() and session.username == username) 
+    # Key still valid in this case
+    if session.valid_until > datetime.datetime.now():
+
+        # Prolong session
+        if Config.KEEP_SESSION_ALIVE:
+            new_valid_until = datetime.datetime.now() + datetime.timedelta(minutes=Config.KEY_VALID_DURATION)
+            session.valid_until = new_valid_until
+            db.commit()
+            logger.info(f"Extended API key validity for {username} to {new_valid_until}.")
+
+        return True
+    
+    return False
+
     
 def is_action_permitted(db: Session, username: str, api_key: str, required_level: int):
     """

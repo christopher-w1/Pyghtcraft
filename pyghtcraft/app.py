@@ -20,8 +20,8 @@ else:
     with open(Config.SECRET_KEY_FILE, 'r') as f:
         app.secret_key = f.read().strip()
 
-# Set session duration
-app.permanent_session_lifetime = timedelta(minutes=Config.KEY_VALID_DURATION)
+# Set session duration # obsolete due to key handling
+# app.permanent_session_lifetime = timedelta(minutes=Config.KEY_VALID_DURATION)
 
 # Initialize logger
 logging.basicConfig(

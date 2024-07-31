@@ -33,3 +33,8 @@ def controlpanel():
 def permissions():
     return render_template('notimplemented.html')
 
+@main_blueprint.route('/adminpanel')
+def adminpanel():
+    return render_template('adminpanel.html')
+
+

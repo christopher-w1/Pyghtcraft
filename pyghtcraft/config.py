@@ -21,7 +21,10 @@ class Config:
     URL_PREFIX          = '/minecraft'
 
     # Duration the login and access key are valid (in minutes)
-    KEY_VALID_DURATION  = 30
+    KEY_VALID_DURATION  = 5
+
+    # Keep session/key alive as long as a user is actively using the website
+    KEEP_SESSION_ALIVE  = True
 
     SECRET_KEY_FILE     = "session.key"
     
