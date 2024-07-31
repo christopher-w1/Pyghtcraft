@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Account Information</title>
+    <script>
+        // Define global JavaScript variables with session values
+        const username   = "{{ session['username'] }}";
+        const api_key    = "{{ session['api_key'] }}";
+        const perm_level = "{{ session['perm_level'] }}";
+    </script>
+    <script src="{{ url_for('static', filename='pingServer.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>   
+    <header></header>
+    <main>
+        <div class="panelbox">
+            <div class="panelheader"> 
+                <div class="windowelem"> 
+                    <h1>Admin Control Panel</h1>
+                </div>
+            </div>
+            
+            <div class="panelmain"> 
+                <div class="panelsidebar">
+                    <div class="windowelem sidebar"> 
+                        <hr style="height: 1px; border-top: 1px solid #ccc;">
+                        <button class="sidebarbutton">New Registration Key</button>
+                        <hr style="height: 1px; border-top: 1px solid #ccc;">
+                        <button class="sidebarbutton">Edit User</button>
+                        <hr style="height: 1px; border-top: 1px solid #ccc;">
+                        <button class="sidebarbutton">Delete User</button>
+                        <hr style="height: 1px; border-top: 1px solid #ccc;">
+                        <button class="sidebarbutton">Leave Panel</button>
+                        <hr style="height: 1px; border-top: 1px solid #ccc;">        
+                    </div>
+                </div>
+
+                <div class="panelcontent">
+                    The Content
+                </div>
+            </div>
+
+        </div>
+    </main>
+    <script src="{{ url_for('static', filename='adminpanel.js') }}"></script>
+</body>
+</html>

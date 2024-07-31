@@ -318,10 +318,72 @@ h1 {
     gap: 20px; /* Abstand zwischen den Buttons */
 }
 
-.success {
-    color: #aea;
-}
-
 .error {
     color: #f55;
+}
+
+.panelbox {
+    display: flex;
+    flex-direction: column;
+    outline: 2px solid white;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    align-items: flex-start;
+}
+
+.panelheader {
+    /*background-color: rgba(0, 255, 0, 0.2);*/
+    width: calc(100%);
+}
+
+.panelmain {
+    display: flex;
+    flex-direction: row;
+    width: calc(100%);
+    height: calc(100% - 78px);
+}
+
+.panelsidebar {
+    background-color: rgba(255, 0, 0, 0.1);
+    width: 220px;
+
+}
+
+.panelcontent {
+    background-color: rgba(0, 255, 0, 0.1);
+    width: calc(100% - 220px);
+}
+
+.windowelem {
+    margin: 5px;
+    padding: 15px;
+    backdrop-filter: blur(10px);
+    background-color: var(--tint);
+    border-radius: 5px;
+    box-shadow: 0px 0 10px rgba(0, 0, 0, 0.333); /* Sanfte Schatten für einen 3D-Effekt */
+    border: 1px solid var(--medium);  
+    background-image: url("aero/aero_window2_small.png");
+    background-size: 100% 100%;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    display:flex;
+    flex-direction: column;
+
+}
+
+.sidebar {
+    height: calc(100% - 44px);
+    max-height: 700px;
+}
+
+.sidebarbutton {
+    border-radius: 2px;
+    margin: 0px;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+    padding: 5px;
+    text-shadow: 1px 1px 4px black;
 }
