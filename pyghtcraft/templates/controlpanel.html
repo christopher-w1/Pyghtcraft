@@ -10,14 +10,14 @@
         const api_key    = "{{ session['api_key'] }}";
         const perm_level = "{{ session['perm_level'] }}";
     </script>
-    <script src="{{ url_for('static', filename='pingServer.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="./static/pingServer.js'"></script>
+    <link rel="stylesheet" href="./static/styles.css">
 </head>
 <body>
     <header></header>
     <main>
         <div class="widthbox" id="widthbox1">
-            <div class="container" id="serverSidebar">
+            <div class="container windowelem" id="serverSidebar">
                 <h2>Server Control Panel</h2>
 
                 <div class="messagebox">
@@ -34,8 +34,8 @@
                     <button onclick="window.location.href='/minecraft/'">Go Back</button>
                 </div>
             </div>
-            <div class="container" id="consoleWindow">
-                <div id="consoleContainer"></div>
+            <div class="container windowelem" id="consoleWindow">
+                <div id="consoleOutput"></div>
                 <input type="text" id="consoleInput" placeholder=">_" onkeydown="handleConsoleInput(event)">
             </div>
         </div>
@@ -48,6 +48,6 @@
             </div>
         </div>
     </main>
-    <script src="{{ url_for('static', filename='controlpanel.js') }}"></script> <!-- Link to external JavaScript file -->
+    <script src="./static/controlpanel.js"></script> <!-- Link to external JavaScript file -->
 </body>
 </html>

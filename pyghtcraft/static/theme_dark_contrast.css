@@ -1,0 +1,134 @@
+/* static/styles.css */
+:root {
+    --white: #fff;
+    --brighter: #eee;
+    --bright: #eee;
+    --bordercolor: #777;
+    --dark: #555;
+    --darker: #111;
+    --tint: #000;
+}
+
+body {
+    background-color: var(--darker); /* Sehr dunkler Hintergrund für den gesamten Body */
+    color: var(--white); /* Helle Schriftfarbe für besseren Kontrast */
+    text-shadow: 1px 1px 2px black;
+}
+
+a {
+    color: #fff;
+}
+
+.errormessage {
+    color: rgb(255, 96, 96);
+    text-emphasis-color: green;
+}
+
+#consoleInput {
+    color: #fff;
+    border: 2px solid #444;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+#consoleContainer {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: rgb(225, 234, 245);
+    border: 2px solid #444;
+}
+
+.toolbar {
+    background-color: #444; /* Hintergrundfarbe, kann angepasst werden */
+    color: white; /* Textfarbe, kann angepasst werden */
+    border: 1px solid #444;
+    box-shadow: 0px 4px 0px black;
+}
+
+#closeBtn2 {
+    background-color: #789;
+}
+
+#startBtn2 {
+    background-color: #053;
+    border-left: 1px solid #595;
+}
+
+#stopBtn2 {
+    border-left: 1px solid #977;
+    background-color: #500;
+}
+
+.consoleBtn {
+    background: #053;
+    outline: 1px solid #333;
+    border: 2px outset #777;
+    box-shadow: inset 2px 8px 12px rgba(255, 255, 255, 0.5);
+    border-bottom: 2px solid black;
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+    outline: 1px solid rgba(255,255,255,0.5);
+    color: var(--bright);
+    border: 1px inset rgba(0,0,0,0.0);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+    outline: 1px solid var(--bright);
+    background-color: #000;
+    color: #fff;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px #eee inset !important;
+    color: #555;
+}
+
+input[type="submit"], button {
+    background: rgba(255, 255, 255, 0.075);
+    color: var(--white);
+    border: 1px outset rgba(77, 77, 77, 01);
+    box-shadow: none;
+    text-shadow: 0px 0px 4px #000;
+    outline: 1px solid rgba(255,255,255,0.0);
+}
+
+input[type="submit"]:hover, button:hover {
+    box-shadow: none;
+    background: #555;
+}
+
+input[type="submit"]:active, button:active{
+    border: 1px inset #000;
+    box-shadow: none;
+    background: #222;
+}
+
+h1 {
+    color: #fff; /* Helle Akzentfarbe für die Überschrift */
+    text-shadow: 1px 1px 2px black;
+}
+
+.error {
+    color: #f55;
+}
+
+.windowelem {
+    background: #222;
+    border: 1px solid var(--bordercolor);  
+}
+
+input::placeholder {
+    color: #fff;
+}
+
+
+.panelcontent {
+    background-color: #333;
+}
+
+.sidebarbutton-selected, .sidebarbutton-selected:active, .sidebarbutton-selected:hover{
+    background-color: #333;
+}

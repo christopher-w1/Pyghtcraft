@@ -99,11 +99,11 @@ label {
     display: none;
     padding: 3px;
     padding-top: 5px;
-    background-image: radial-gradient(circle at bottom, rgba(0, 0, 0, 0) 50%, rgba(255, 255, 255, 0.3) 90%);
+    background-image: url("aero/aero_window_small.png");
+    background-size: 100% 100%;
     width: fit-content;
     max-height: 100%;
     max-width: 100%;
-    min-width: 300px;
 }
 
 #consoleInput {
@@ -120,7 +120,7 @@ label {
     height: 30px;
 }
 
-#consoleOutput {
+#consoleContainer {
     display: none;
     background-color: rgba(0, 0, 0, 0.8);
     color: rgb(225, 234, 245);
@@ -135,7 +135,6 @@ label {
     border-bottom: none;
     text-align: left;
     max-width: 1000px;
-    min-height: 240px;
 }
 
 .toolbar {
@@ -227,6 +226,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
     outline: 1px solid var(--bright);
+    background-color: #000;
     color: #fff;
 }
 
@@ -249,7 +249,7 @@ input[type="submit"], button {
     /*background-color: var(--tint);;
     background-image: url(aero/glassbtn050b.png);
     background-size: 100% 150%;*/
-    background: linear-gradient(0deg, rgba(0,0,0,.4), rgba(255,255,255,0.1) 80%);
+    background: linear-gradient(0deg, rgba(0,0,0,.3), rgba(255,255,255,0.3) 80%);
     color: var(--white);
     border: 1px outset rgba(77, 77, 77, 0.5);
     box-shadow: inset 4px 8px 8px rgba(255,255,255,0.25);
@@ -310,6 +310,7 @@ h1 {
     flex-direction: column;
     width: calc(100% - 10px);
     max-width: 700px;
+    height: calc(100% - 10px);
     max-height: 500px;
     align-items: flex-start;
     height: fit-content;
@@ -318,7 +319,7 @@ h1 {
 .panelheader {
     /*background-color: rgba(0, 255, 0, 0.2);*/
     width: calc(100%);
-    min-height: 50px;
+    height: 50px;
 }
 
 .panelmain {
@@ -328,7 +329,6 @@ h1 {
     align-items: center;
     width: calc(100%);
     height: calc(100% - 40px);
-    height:fit-content;
 }
 
 .panelcontent {
@@ -349,7 +349,7 @@ h1 {
 .windowelem {
     margin: 5px;
     padding: 15px;
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(10px);
     background-color: var(--tint);
     border-radius: 5px;
     box-shadow: 0px 0 10px rgba(0, 0, 0, 0.333); /* Sanfte Schatten für einen 3D-Effekt */
@@ -381,7 +381,7 @@ h1 {
     justify-content: center;
     padding: 0px;
     margin: 0px;
-    width: 200px;
+    width: 180px;
     height: calc(100%);
 }
 

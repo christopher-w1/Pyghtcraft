@@ -41,14 +41,14 @@ function sendAction(action) {
 // Function to toggle the console window
 function toggleConsole() {
     consoleOpen = !consoleOpen;
-    const consoleContainer = document.getElementById('consoleContainer');
+    const consoleOutput = document.getElementById('consoleOutput');
     const consoleWindow = document.getElementById('consoleWindow');
     const consoleToolbar = document.getElementById('consoletoolbar');
     const openConsoleBtn = document.getElementById('openConsoleBtn');
     const widthbox = document.getElementById('widthbox1');
     const sidebar = document.getElementById('serverSidebar');
     if (consoleOpen) {
-        consoleContainer.style.display = 'block';
+        consoleOutput.style.display = 'block';
         consoleWindow.style.display = 'block';
         openConsoleBtn.innerText = 'Close Console';
         sidebar.style.width = '250px';
@@ -63,7 +63,7 @@ function toggleConsole() {
         }
         fetchConsoleOutput(); // Start fetching console output
     } else {
-        consoleContainer.style.display = 'none';
+        consoleOutput.style.display = 'none';
         consoleWindow.style.display = 'none'; 
         openConsoleBtn.innerText = 'Open Console';
         sidebar.style.width = '320px';
@@ -100,13 +100,13 @@ function fetchConsoleOutput() {
     })
     .then(data => {
         if (data) {
-            const consoleContainer = document.getElementById('consoleContainer');
+            const consoleOutput = document.getElementById('consoleOutput');
             const newConsoleOutput = data.console_output.join('\n');
             
             if (newConsoleOutput !== lastConsoleOutput) {
                 lastConsoleOutput = newConsoleOutput;
-                consoleContainer.innerText = newConsoleOutput;
-                consoleContainer.scrollTop = consoleContainer.scrollHeight; // Scroll to bottom
+                consoleOutput.innerText = newConsoleOutput;
+                consoleOutput.scrollTop = consoleOutput.scrollHeight; // Scroll to bottom
             }
         }
     })

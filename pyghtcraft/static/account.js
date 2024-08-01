@@ -30,7 +30,7 @@ function openEditorPassword() {
     const emailform = document.getElementById('changemailform');
     const nameform = document.getElementById('changenameform');
 
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 768 || true) {
         sidebar.style.display       = 'none';
     } else if (window.innerWidth < 1100) {
         sidebar.style.width       = '240px';
@@ -50,7 +50,7 @@ function openEditorEmail() {
     const emailform = document.getElementById('changemailform');
     const nameform = document.getElementById('changenameform');
 
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 768 || true) {
         sidebar.style.display       = 'none';
     } else if (window.innerWidth < 1100) {
         sidebar.style.width       = '240px';
@@ -70,7 +70,7 @@ function openEditorName() {
     const emailform = document.getElementById('changemailform');
     const nameform = document.getElementById('changenameform');
 
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 768 || true) {
         sidebar.style.display       = 'none';
     } else if (window.innerWidth < 1200) {
         sidebar.style.width       = '240px';
@@ -244,7 +244,7 @@ function submitEditorData() {
                 if (!(new_name === new_name2)) {
                     displayError("New username did not match confirmation. Please type again.");
                 } else {
-                    changeUsername(current_username, current_password, new_email);
+                    changeUsername(current_username, current_password, new_name);
                 }
                 break;
 

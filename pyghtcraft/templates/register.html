@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minecraft Registration Form</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="./static/styles.css">
 </head>
 <body>   
     <header></header>
     <main>
         <div> 
         <br>
-        <form action="/minecraft/register" method="post" class="container w3">
+        <form action="/minecraft/register" method="post" class="container windowelem">
             <h2>New Account</h2>
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="This must match your name in minecraft." required>

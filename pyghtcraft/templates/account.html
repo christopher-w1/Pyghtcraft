@@ -10,14 +10,14 @@
         const api_key    = "{{ session['api_key'] }}";
         const perm_level = "{{ session['perm_level'] }}";
     </script>
-    <script src="{{ url_for('static', filename='pingServer.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="./static/pingServer.js'"></script>
+    <link rel="stylesheet" href="./static/styles.css">
 </head>
 <body>   
     <header></header>
     <main>
         <div class="widthbox" id="widthbox2" style="align-items: center; height:fit-content">
-            <div class="container" id="accountsidebar" style="margin-inline: 5px;">
+            <div class="container windowelem" id="accountsidebar" style="margin-inline: 5px;">
                 <h2> Hello, {{ session['username'] }}! </h2>
                 <div id="sidebarmessage">What do you want to do?</div>
                 <hr>
@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <div class="container" id="accounteditor" style="margin-inline: 5px; margin-block: none; display: none;">
+            <div class="container windowelem" id="accounteditor" style="margin-inline: 5px; margin-block: none; display: none;">
 
                 
                 <div id="changepasswordform">
@@ -84,6 +84,6 @@
             </div>
         </div>
     </main>
-    <script src="{{ url_for('static', filename='account.js') }}"></script>
+    <script src="./static/account.js"></script>
 </body>
 </html>
