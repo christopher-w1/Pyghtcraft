@@ -102,12 +102,7 @@ function fetchConsoleOutput() {
         if (data) {
             const consoleOutput = document.getElementById('consoleOutput');
             const newConsoleOutput = data.console_output.join('\n');
-            
-            if (newConsoleOutput !== lastConsoleOutput) {
-                lastConsoleOutput = newConsoleOutput;
-                consoleOutput.innerText = newConsoleOutput;
-                consoleOutput.scrollTop = consoleOutput.scrollHeight; // Scroll to bottom
-            }
+            consoleOutput.innerText = newConsoleOutput;
         }
     })
     .catch(error => {
