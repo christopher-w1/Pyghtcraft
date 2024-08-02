@@ -20,7 +20,7 @@ body {
     color: var(--white); /* Helle Schriftfarbe für besseren Kontrast */
     margin: 0;
     padding: 0;
-    background-image: url(mc0.png); /*url("mc1.jpg");*/
+    background-image: url(mc0.jpg); /*url("mc1.jpg");*/
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
