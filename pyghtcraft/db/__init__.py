@@ -3,14 +3,15 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from contextlib import contextmanager
 import logging
-#from ..config import Config
+from config import Config
 
 # Logging konfigurieren
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Initialisiere die Engine
-DATABASE_URL = "mysql+pymysql://myuser:mypassword@localhost/mydatabase"
+#DATABASE_URL = "mysql+pymysql://myuser:mypassword@localhost/mydatabase"
+DATABASE_URL = Config.DATABASE_URL
 engine = create_engine(DATABASE_URL)
 
 # Erstelle eine SessionLocal für die Datenbankverbindung
