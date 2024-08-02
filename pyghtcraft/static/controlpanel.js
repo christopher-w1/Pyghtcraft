@@ -101,8 +101,20 @@ function fetchConsoleOutput() {
     .then(data => {
         if (data) {
             const consoleOutput = document.getElementById('consoleOutput');
-            const newConsoleOutput = data.console_output.join('\n');
-            consoleOutput.innerText = newConsoleOutput;
+            consoleOutput.innerHTML = ''; // Clear previous output
+
+            data.console_output.forEach(line => {
+                const lineElement = document.createElement('div');
+                if (line.includes('ERROR')) {
+                    lineElement.style.color = 'red';
+                } else if (line.includes('WARN')) {
+                    lineElement.style.color = 'yellow';
+                } else if (line.includes('Done')) {
+                    lineElement.style.color = 'green';
+                }
+                lineElement.innerText = line;
+                consoleOutput.appendChild(lineElement);
+            });
         }
     })
     .catch(error => {
