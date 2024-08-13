@@ -73,7 +73,7 @@ def control_minecraft():
     
     # Open database
     with get_db() as db:
-        logger.info(f"User '{username}' sent POST request with action '{action}' to API.")
+        #logger.info(f"User '{username}' sent POST request with action '{action}' to API.")
         match action:
             # Request to ask if server is offline or online
             case "status":

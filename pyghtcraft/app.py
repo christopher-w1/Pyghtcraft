@@ -8,8 +8,9 @@ import logging, argparse, os
 
 app = Flask(__name__, static_url_path=f'/{Config.URL_PREFIX}/static', static_folder='static')
 
+
 # Set secret key for session management
-if not os.path.exists(Config.SECRET_KEY_FILE):
+if not os.path.exists(Config.SECRET_KEY_FILE) or True:
     # Generate new key if necessary
     new_key = os.urandom(32).hex()
     with open(Config.SECRET_KEY_FILE, 'w') as f:
@@ -19,6 +20,7 @@ else:
     # Read key from file
     with open(Config.SECRET_KEY_FILE, 'r') as f:
         app.secret_key = f.read().strip()
+    
 
 # Set session duration # obsolete due to key handling
 # app.permanent_session_lifetime = timedelta(minutes=Config.KEY_VALID_DURATION)
